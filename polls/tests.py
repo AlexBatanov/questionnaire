@@ -102,3 +102,9 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             [question1, question2]
         )
+
+class QuestionDetailTests(TestCase):
+    def test_future_deatil_question(self):
+        question = create_question(question_text='text', days=30)
+        response = self.client.get(reverse('polls:detail', args=(question.pk,)))
+        self.assertEqual(response.status_code, 404)
